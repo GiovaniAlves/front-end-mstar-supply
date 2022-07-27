@@ -32,8 +32,8 @@ export default {
         /* Coloque aqui abaixo o ('path') em vez do ('name') pq na rota de /painel/relatórios quero que apereça apenas
              o nome /painel na rota, se eu tivesse colocado o ('name') iria redirecionar para a rota /painel e não mostraria os reports. */
         { title: 'Painel', icon: 'bi bi-speedometer2', url: '/painel', exact: true },
-        { title: 'Mercadorias', icon: 'bi bi-box-seam', url: '/painel/especificacoes', exact: true },
-        { title: 'Entradas/Saídas', icon: 'bi-arrow-down-up', url: '/painel/produtos', exact: true }
+        { title: 'Mercadorias', icon: 'bi bi-box-seam', url: '/painel/mercadorias', exact: true },
+        { title: 'Entradas/Saídas', icon: 'bi-arrow-down-up', url: '/painel/entradas_saidas', exact: true }
       ]
     }
   }
