@@ -20,37 +20,34 @@
          <form @submit.prevent='submit'>
             <div class='card-body'>
                <div class='row'>
-                  <div class='col-12 col-md-6 col-lg-6'>
+                  <div class='col-12 col-md-8 col-lg-8'>
                      <div class='mb-3'>
-                        <label class='form-label'>Nome</label>
-                        <input v-model='localMerchandise.name' type='text' class='form-control' name='name'>
+                        <label class='form-label'>Mercadoria</label>
+                        <select v-model="localInputOutput.merchandise" class="form-select" name='merchandise'>
+                           <option selected>Selecione a Mercadoria</option>
+                           <option v-for="good in goods" :key="good.id" :value="good.id">{{ good.name }}</option>
+                        </select>
                      </div>
                   </div>
-                  <div class='col-12 col-md-6 col-lg-6'>
-                     <div class='mb-3'>
-                        <label class='form-label'>Número de Registro</label>
-                        <input v-model='localMerchandise.registration_number' type='text' class='form-control'
-                               name='registration_number'>
-                     </div>
-                  </div>
-                  <div class='col-12 col-md-6 col-lg-6'>
-                     <div class='mb-3'>
-                        <label class='form-label'>Fabricante</label>
-                        <input v-model='localMerchandise.manufacturer' type='text' class='form-control'
-                               name='manufacturer'>
-                     </div>
-                  </div>
-                  <div class='col-12 col-md-6 col-lg-6'>
+                  <div class='col-12 col-md-4 col-lg-4'>
                      <div class='mb-3'>
                         <label class='form-label'>Tipo</label>
-                        <input v-model='localMerchandise.type' type='text' class='form-control' name='type'>
+                        <select v-model="localInputOutput.type" class="form-select" name='merchandise'>
+                           <option value="input" selected>Entrada</option>
+                           <option value="output">Saída</option>
+                        </select>
                      </div>
                   </div>
-                  <div class='col-12'>
+                  <div class='col-12 col-md-6 col-lg-6'>
                      <div class='mb-3'>
-                        <label class='form-label'>Descrição</label>
-                        <textarea v-model='localMerchandise.description' class='form-control'
-                                  name='description'></textarea>
+                        <label class='form-label'>Quantidade</label>
+                        <input v-model="localInputOutput.qtd_goods" type='text' class='form-control' name='qtd_goods'>
+                     </div>
+                  </div>
+                  <div class='col-12 col-md-6 col-lg-6'>
+                     <div class='mb-3'>
+                        <label class='form-label'>Local</label>
+                        <input v-model="localInputOutput.local" type='text' class='form-control' name='local'>
                      </div>
                   </div>
                </div>
@@ -74,27 +71,28 @@
 <script>
 import { mapActions } from 'vuex'
 import GoodsService from '@/modules/dashboard/modules/goods/services/goods-service'
+import InputsOutputsService from '@/modules/dashboard/modules/inputs_outputs/services/inputs-outputs-service'
 
 export default {
-   name: 'GoodsForm.vue',
+   name: 'InputOutputForm.vue',
    data () {
       return {
-         localMerchandise: {
-            name: '',
-            registration_number: '',
-            manufacturer: '',
+         localInputOutput: {
+            qtd_goods: null,
+            local: '',
             type: '',
-            description: ''
+            merchandise: null
          },
+         goods: [],
          errors: [],
          isEditing: false,
          loading: false
       }
    },
    async created () {
-      this.setTitle({ title: 'Mercadorias' })
+      this.setTitle({ title: 'Entradas/Saídas' })
+      this.goods = await GoodsService.index()
       if (this.$route.params.id) {
-         this.localMerchandise = await GoodsService.get(this.$route.params.id)
          this.isEditing = true
       }
    },
@@ -105,17 +103,17 @@ export default {
          this.resetErrors()
 
          let action = 'Cadastrado'
-         if (this.localMerchandise.id) {
+         if (this.localInputOutput.id) {
             action = 'Atualizado'
          }
 
          try {
-            const response = await GoodsService.save(this.localMerchandise)
+            const response = await InputsOutputsService.save(this.localInputOutput, this.localInputOutput.type)
             const { data } = response
 
             if (!this.$route.params.id) {
                this.$router.push({
-                  name: 'goodsEdit',
+                  name: 'inputs_outputsEdit',
                   params: { id: data.id }
                })
                this.isEditing = true

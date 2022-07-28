@@ -13,6 +13,25 @@ const index = async (type) => {
    }
 }
 
+const save = async (inputOutput, type) => {
+   // Entradas
+   if (type === 'inputs') {
+      if (inputOutput.id) {
+         return await axiosClient.put(`${routeInput}/${inputOutput.id}/`, inputOutput)
+      } else {
+         return await axiosClient.post(`${routeInput}/`, inputOutput)
+      }
+   // Saídas
+   } else {
+      if (inputOutput.id) {
+         return await axiosClient.put(`${routeOutput}/${inputOutput.id}/`, inputOutput)
+      } else {
+         return await axiosClient.post(`${routeOutput}/`, inputOutput)
+      }
+   }
+}
+
 export default {
-   index
+   index,
+   save
 }

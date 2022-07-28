@@ -4,7 +4,7 @@
 
          <div class='card-header'>
             <router-link
-               :to="{ name: 'goodsCreate' }"
+               :to="{ name: 'inputs_outputsCreate' }"
                class='btn btn-primary btn-sm'
             >
                Cadastrar Entrada/Saída
