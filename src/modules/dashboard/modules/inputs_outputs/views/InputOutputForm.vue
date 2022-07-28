@@ -20,7 +20,7 @@
          <form @submit.prevent='submit'>
             <div class='card-body'>
                <div class='row'>
-                  <div class='col-12 col-md-8 col-lg-8'>
+                  <div v-if='!isEditing' class='col-12 col-md-8 col-lg-8'>
                      <div class='mb-3'>
                         <label class='form-label'>Mercadoria</label>
                         <select v-model="localInputOutput.merchandise" class="form-select" name='merchandise'>
@@ -29,7 +29,7 @@
                         </select>
                      </div>
                   </div>
-                  <div class='col-12 col-md-4 col-lg-4'>
+                  <div v-if='!isEditing' class='col-12 col-md-4 col-lg-4'>
                      <div class='mb-3'>
                         <label class='form-label'>Tipo</label>
                         <select v-model="localInputOutput.type" class="form-select" name='merchandise'>
@@ -93,6 +93,7 @@ export default {
       this.setTitle({ title: 'Entradas/Saídas' })
       this.goods = await GoodsService.index()
       if (this.$route.params.id) {
+         this.localInputOutput = await InputsOutputsService.get(this.$route.params.id, this.$route.params.type)
          this.isEditing = true
       }
    },

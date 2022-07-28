@@ -34,7 +34,9 @@
                      </span>
                   </td>
                   <td>
-                     <router-link :to="{ name: 'inputs_outputsEdit', params: { id: inputOutput.id } }" class="btn btn-primary btn-sm mx-md-2">
+                     <router-link
+                        :to="{ name: 'inputs_outputsEdit', params: { id: inputOutput.id, type: inputOutput.type } }"
+                         class="btn btn-primary btn-sm mx-md-2">
                         <i class="bi bi-pencil"></i>
                      </router-link>
                   </td>
@@ -62,9 +64,6 @@ export default {
       const inputs = await InputsOutputsService.index('inputs')
       const outputs = await InputsOutputsService.index('outputs')
       this.inputsOutputs = Array.prototype.concat(inputs, outputs)
-
-      console.log(inputs)
-      console.log(outputs)
    },
    methods: {
       ...mapActions(['setTitle'])

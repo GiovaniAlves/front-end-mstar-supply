@@ -13,9 +13,19 @@ const index = async (type) => {
    }
 }
 
+const get = async (id, type) => {
+   if (type === 'input') {
+      const response = await axiosClient.get(`${routeInput}/${id}`)
+      return response.data
+   } else {
+      const response = await axiosClient.get(`${routeOutput}/${id}`)
+      return response.data
+   }
+}
+
 const save = async (inputOutput, type) => {
    // Entradas
-   if (type === 'inputs') {
+   if (type === 'input') {
       if (inputOutput.id) {
          return await axiosClient.put(`${routeInput}/${inputOutput.id}/`, inputOutput)
       } else {
@@ -33,5 +43,6 @@ const save = async (inputOutput, type) => {
 
 export default {
    index,
+   get,
    save
 }
