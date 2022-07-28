@@ -7,6 +7,11 @@ const index = async () => {
    return response.data
 }
 
+const get = async (id) => {
+   const response = await axiosClient.get(`${route}/${id}`)
+   return response.data
+}
+
 const save = async (merchandise) => {
    if (merchandise.id) {
       return await axiosClient.put(`${route}/${merchandise.id}/`, merchandise)
@@ -17,5 +22,6 @@ const save = async (merchandise) => {
 
 export default {
    index,
+   get,
    save
 }

@@ -91,8 +91,12 @@ export default {
          loading: false
       }
    },
-   created () {
+   async created () {
       this.setTitle({ title: 'Mercadorias' })
+      if (this.$route.params.id) {
+         this.localMerchandise = await GoodsService.get(this.$route.params.id)
+         this.isEditing = true
+      }
    },
    methods: {
       ...mapActions(['setTitle']),
@@ -100,20 +104,27 @@ export default {
          this.loading = true
          this.resetErrors()
 
-         try {
-            /* const response = */await GoodsService.save(this.localMerchandise)
-            /* const { data } = response */
+         let action = 'Cadastrado'
+         if (this.localMerchandise.id) {
+            action = 'Atualizado'
+         }
 
-            /* if (!this.$route.params.id) {
+         try {
+            const response = await GoodsService.save(this.localMerchandise)
+            const { data } = response
+
+            if (!this.$route.params.id) {
                this.$router.push({
                   name: 'goodsEdit',
                   params: { id: data.id }
                })
                this.isEditing = true
-            } */
+            }
 
+            this.$toast.success(`${action} com sucesso!`)
             console.log('OK...')
          } catch (error) {
+            console.log(error)
             const { status } = error.response
             const errors = error.response.data
 
@@ -124,7 +135,10 @@ export default {
                return
             }
 
+            this.$toast.error('Falha')
             console.log('Error save merchandise', errors)
+         } finally {
+            this.loading = false
          }
       },
       resetErrors () {

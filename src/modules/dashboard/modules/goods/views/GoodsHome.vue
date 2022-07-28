@@ -31,7 +31,9 @@
                   <td>{{ merchandise.manufacturer }}</td>
                   <td>{{ merchandise.type }}</td>
                   <td>
-                     <button class="btn btn-primary btn-sm mx-md-2"><i class="bi bi-pencil"></i></button>
+                     <router-link :to="{ name: 'goodsEdit', params: { id: merchandise.id } }" class="btn btn-primary btn-sm mx-md-2">
+                        <i class="bi bi-pencil"></i>
+                     </router-link>
                      <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
                   </td>
                </tr>
