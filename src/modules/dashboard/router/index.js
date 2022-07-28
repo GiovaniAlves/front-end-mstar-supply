@@ -1,4 +1,5 @@
 import goodsRoutes from './../modules/goods/router'
+import inputsOutputsRoutes from './../modules/inputs_outputs/router'
 
 const Home = () => import('../views/Home.vue')
 
@@ -12,7 +13,8 @@ export default [
             name: 'dashboard',
             component: Home,
             children: [
-               ...goodsRoutes
+               ...goodsRoutes,
+               ...inputsOutputsRoutes
             ]
          }
       ]
