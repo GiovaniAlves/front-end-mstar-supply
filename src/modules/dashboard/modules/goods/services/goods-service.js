@@ -7,6 +7,15 @@ const index = async () => {
    return response.data
 }
 
+const save = async (merchandise) => {
+   if (merchandise.id) {
+      return await axiosClient.put(`${route}/${merchandise.id}/`, merchandise)
+   } else {
+      return await axiosClient.post(`${route}/`, merchandise)
+   }
+}
+
 export default {
-   index
+   index,
+   save
 }
