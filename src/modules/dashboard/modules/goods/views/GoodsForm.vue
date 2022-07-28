@@ -122,7 +122,6 @@ export default {
             }
 
             this.$toast.success(`${action} com sucesso!`)
-            console.log('OK...')
          } catch (error) {
             console.log(error)
             const { status } = error.response

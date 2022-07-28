@@ -34,7 +34,9 @@
                      <router-link :to="{ name: 'goodsEdit', params: { id: merchandise.id } }" class="btn btn-primary btn-sm mx-md-2">
                         <i class="bi bi-pencil"></i>
                      </router-link>
-                     <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                     <button @click.prevent="deleteMerchandise(merchandise.id)" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                     </button>
                   </td>
                </tr>
                </tbody>
@@ -60,7 +62,14 @@ export default {
       this.goods = await GoodsService.index()
    },
    methods: {
-      ...mapActions(['setTitle'])
+      ...mapActions(['setTitle']),
+      async deleteMerchandise (id) {
+         if (confirm('Deseja realmente excluir esse registro?')) {
+            await GoodsService.destroy(id)
+            this.$toast.success('Excluído com sucesso!')
+            await GoodsService.index()
+         }
+      }
    }
 }
 </script>

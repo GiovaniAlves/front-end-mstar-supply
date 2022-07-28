@@ -7,6 +7,10 @@ const index = async () => {
    return response.data
 }
 
+const destroy = (id) => {
+   return axiosClient.delete(`${route}/${id}`)
+}
+
 const get = async (id) => {
    const response = await axiosClient.get(`${route}/${id}`)
    return response.data
@@ -22,6 +26,7 @@ const save = async (merchandise) => {
 
 export default {
    index,
+   destroy,
    get,
    save
 }
